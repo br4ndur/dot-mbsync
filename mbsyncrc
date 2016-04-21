@@ -1,0 +1,249 @@
+# mbsyncrc based on
+# http://www.ict4g.net/adolfo/notes/2014/12/27/EmacsIMAP.html
+
+# ACCOUNT INFORMATION
+IMAPAccount gmail
+# Address to connect to
+Host imap.gmail.com
+User branduren@gmail.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d /home/branduren/.password-store/gmail/branduren@gmail.com.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore gmail-remote
+Account gmail
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel gmail-inbox
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Bin"
+Slave :gmail-local:"[Gmail].Bin"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:"[Gmail].Sent Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:"[Gmail].Drafts"
+Create Both
+Expunge Both
+SyncState *
+
+#Channel gmail-all
+#Master :gmail-remote:"[Gmail]/All Mail"
+#Slave :gmail-local:"[Gmail].All Mail"
+#Create Both
+#Expunge Both
+#SyncState *
+
+Channel gmail-starred
+Master :gmail-remote:"[Gmail]/Starred"
+Slave :gmail-local:"[Gmail].Starred"
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-trash
+#Channel gmail-all
+Channel gmail-starred
+
+
+#-------------------------------------------------------------
+
+
+# ACCOUNT INFORMATION
+IMAPAccount ktbit
+# Address to connect to
+Host imap.kolabnow.com
+User brandur@ktbit.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.password-store/email/brandur@ktbit.com.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+#SSLVersions SSLv3
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore ktbit-remote
+Account ktbit
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore ktbit-local
+Path ~/.mail/ktbit/
+Inbox ~/.mail/ktbit/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel ktbit-inbox
+Master :ktbit-remote:
+Slave :ktbit-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel ktbit-trash
+Master :ktbit-remote:"Trash"
+Slave :gmail-local:"trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel ktbit-sent
+Master :ktbit-remote:"Sent"
+Slave :ktbit-local:"sent"
+Create Both
+Expunge Both
+SyncState *
+
+Channel ktbit-drafts
+Master :ktbit-remote:"Drafts"
+Slave :ktbit-local:"drafts"
+Create Both
+Expunge Both
+SyncState *
+
+Channel ktbit-spam
+Master :ktbit-remote:"Spam"
+Slave :ktbit-local:"spam"
+Create Both
+Expunge Both
+SyncState *
+
+Channel ktbit-archive
+Master :ktbit-remote:"Archive"
+Slave :ktbit-local:"archive"
+Create Both
+Expunge Both
+SyncState *
+
+#Channel ktbit-archive-receipt
+#Master :ktbit-remote:"Archive-receipt"
+#Slave :ktbit-local:"receipt"
+#Create Both
+#Expunge Both
+#SyncState *
+
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group ktbit
+Channel ktbit-inbox
+Channel ktbit-sent
+Channel ktbit-trash
+Channel ktbit-drafts
+Channel ktbit-spam
+Channel ktbit-archive
+#Channel ktbit-archive-receipt
+
+
+#-------------------------------------------------------------
+
+# ACCOUNT INFORMATION
+IMAPAccount tekno
+# Address to connect to
+Host outlook.office365.com
+User boe@tekno.dk
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.password-store/tekno/mail/boe@tekno.dk.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+#SSLVersions SSLv3
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore tekno-remote
+Account tekno
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore tekno-local
+Path ~/.mail/tekno/
+Inbox ~/.mail/tekno/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel tekno-inbox
+Master :tekno-remote:
+Slave :tekno-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group tekno
+Channel tekno-inbox
